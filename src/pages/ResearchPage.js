@@ -1,7 +1,6 @@
 import React from 'react';
 import { Container, Row, Col } from 'reactstrap';
 import {FaPlus, FaMinus} from 'react-icons/fa';
-import { Link } from 'react-router-dom'
 
 /**
  * Front-end Requirements ...
@@ -56,7 +55,7 @@ class ResearchPage extends React.Component {
     // Fetch data helper
     fetchSimilarityData = async (v,q,a) => {
         let url = `/api/similarity/${v}/${q}/${a}`;
-        console.log(url);
+        //console.log(url);
         const rankResults = await fetch(url, {
             method: "GET",
             headers : { 
@@ -69,8 +68,8 @@ class ResearchPage extends React.Component {
         const recommendedList = [];
         bodyRanks.ranks.map(async (rank, i) => {
             let url = `/api/articles/${rank.volumeKey}/${rank.questionKey}/${rank.articleKey}`;
-            console.log(`Result ${i}`);
-            console.log(url);
+            //console.log(`Result ${i}`);
+            //console.log(url);
             const contentResult = await fetch(url, {
                 method: "GET",
                 headers : { 
@@ -81,7 +80,7 @@ class ResearchPage extends React.Component {
             const resultData = await contentResult.json();
             recommendedList.push(resultData);
         });
-        console.log(recommendedList);
+        //console.log(recommendedList);
         this.setState({similarityData:recommendedList});  
       
     }
@@ -198,7 +197,7 @@ class ResearchPage extends React.Component {
             });
         }
         else{
-            console.log("Something went wrong");
+            console.log(`Something went wrong on select on ${cat} change.`);
         }
 
         // Update live data for display
@@ -246,8 +245,44 @@ class ResearchPage extends React.Component {
         })
     }
 
-    render(){
+    // // Handle Similar Select
+    // handleSimilarSelect = (e, volumeKey, questionKey, articleKey) => {
+    //     e.preventDefault();
 
+    //     const selection = this.state.shell_data.filter(item => item.volumeKey === volumeKey).filter(item => item.questionKey === questionKey).filter(item => item.articleKey === articleKey);
+    //     const volume = selection.volume;
+    //     const selectedQuestion = selection.questionTitle;
+    //     const selectedArticle = selection.articleTitle;
+        
+
+    //     // Update content data from db
+    //     this.fetchData(volumeKey, questionKey, articleKey);
+    //     this.fetchSimilarityData(volumeKey, questionKey, articleKey);
+
+    //     // Set state
+    //     this.setState({
+    //         selectedVolume:volume,
+    //         selectedVolumeKey:volumeKey,
+    //         selectedQuestion:selectedQuestion,
+    //         selectedQuestionKey:questionKey,
+    //         selectedArticle:selectedArticle,
+    //         selectedArticleKey:articleKey,
+    //     });
+
+    //     //Set the pickers to the right location.
+    //     const volumePicker = document.getElementById("volumePicker");
+    //     volumePicker.value = volume;
+
+    //     const questionPicker = document.getElementById("questionPicker");
+    //     questionPicker.value = selectedQuestion;
+
+    //     const articlePicker = document.getElementById("articlePicker");
+    //     articlePicker.value = selectedArticle;
+        
+
+    // }
+
+    render(){
         return(
             <div>
                 <Container>
@@ -268,7 +303,7 @@ class ResearchPage extends React.Component {
                                     >
                                     <div id="volume-select-div">
                                         <h4>Volume</h4>
-                                        <select className="form-control selectpicker"
+                                        <select className="form-control selectpicker" id="volumePicker"
                                                 defaultValue={this.state.selectedVolume}
                                                 onChange={(e) => this.handleInputChange(e, 'volume')}
                                                 >
@@ -276,8 +311,8 @@ class ResearchPage extends React.Component {
                                                 Array.from(new Set(this.state.shell_data
                                                     .map(item => item.volume)))
                                                     .sort()
-                                                .map((uniqueVolumes,i) => 
-                                                    <option key={i} value={uniqueVolumes}>{uniqueVolumes}</option>
+                                                .map((uniqueVolume,i) => 
+                                                    <option key={i} value={uniqueVolume}>{uniqueVolume}</option>
                                                 )
                                                 }
                                     </select>
@@ -285,7 +320,7 @@ class ResearchPage extends React.Component {
 
                                     <div id="question-select-div">
                                         <h4>Question</h4>
-                                        <select className="form-control selectpicker"
+                                        <select className="form-control selectpicker" id="questionPicker"
                                                 data-live-search={true}
                                                 defaultValue={this.state.selectedQuestion}
                                                 onChange={(e) => this.handleInputChange(e, 'question')}>
@@ -303,7 +338,7 @@ class ResearchPage extends React.Component {
 
                                 <div id="article-select-div">
                                         <h4>Article</h4>
-                                        <select className="form-control selectpicker"
+                                        <select className="form-control selectpicker" id="articlePicker"
                                                 defaultValue={this.state.selectedArticle}
                                                 onChange={(e) => this.handleInputChange(e, 'article')}>
                                                 {
@@ -379,8 +414,9 @@ class ResearchPage extends React.Component {
                                                     href="" 
                                                     className="mt-3 ml-3 mr-3"
                                                     value={`${item.volumeKey}/${item.questionKey}/${item.articleKey}`}
+                                                    // onClick={(e) => {this.handleSimilarSelect(e, item.volumeKey, item.questionKey, item.articleKey)}}>
                                                     onClick={(e) => {e.preventDefault()}}>
-                                                            {`${item.volumeKey}/${item.questionKey}/   ${item.articleKey}`}
+                                                            {`${item.volumeKey}/${item.questionKey}/${item.articleKey}`}
                                                 </a>
                                                 <div className="mt-3 ml-3 mr-3 mb-3">
                                                     <p>{`${item.volume}`} &nbsp; {`${item.questionTitle}`}</p>
