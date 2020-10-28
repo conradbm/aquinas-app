@@ -1,9 +1,9 @@
 import React from 'react';
 import { Container, Row, Col } from 'reactstrap';
-import SearchSection from './page-components/explore-page/SearchSection';
-import ResultsSection from './page-components/explore-page/ResultsSection';
+import SearchSection from './page-components/search-page/SearchSection';
+import ResultsSection from './page-components/search-page/ResultsSection';
 
-class ExplorePage extends React.Component {
+class SearchPage extends React.Component {
 
     state = {
         searchText:"",
@@ -80,12 +80,13 @@ class ExplorePage extends React.Component {
             <div>
                 <Container>
                     <br></br>
-
                     <Row>
                         <Col>
-                             <h1>Explore Page</h1>
+                             <h1>Search Content </h1>
+                             <p>We created a custom search engine just for Aquinas. </p>
+                             <p>Search here to find things a little easier.</p>
+                             <p>Once you've found something promising, leverage the <em>Research</em> tab to drill in a little deeper.</p>
                         </Col>
-
                     </Row>
                     <br></br>
                     <SearchSection
@@ -109,4 +110,4 @@ class ExplorePage extends React.Component {
     }
 }
 
-export default ExplorePage;
+export default SearchPage;

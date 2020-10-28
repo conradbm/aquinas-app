@@ -25,7 +25,7 @@ class ResearchPage extends React.Component {
         display_data:{articleObjections:[], articleBody:"", articleReplyToObjections:[]},
         filteredData:undefined,
         displayResearch:true,
-        displayResults:false,
+        displayResults:true,
         displaySimilar:false,
         selectedVolumeKey:"",
         selectedQuestionKey:"",
@@ -286,6 +286,13 @@ class ResearchPage extends React.Component {
         return(
             <div>
                 <Container>
+                <br></br>
+                    <Col className="">
+                        <h1>Research Content</h1>
+                        <p>This is the place where you can research specific sections of Aquinas. </p>
+                        <p>We also provide some suggested readings as cross references to the any selected article for further research.</p>
+
+                    </Col>
                     <br></br>
                     <Col>
                         <Row className="card mt-3"> 
@@ -409,21 +416,23 @@ class ResearchPage extends React.Component {
                                             }
                                             >  
                                         {this.state.similarityData.map((item,i) => 
-                                            <div className="card search-result-item" key={i}>
+                                        <>
+                                            <div className="result-item p-3 mb-5 bg-white rounded m-1" key={i}>
                                                 <a 
                                                     href="" 
-                                                    className="mt-3 ml-3 mr-3"
+                                                    className=""
                                                     value={`${item.volumeKey}/${item.questionKey}/${item.articleKey}`}
                                                     // onClick={(e) => {this.handleSimilarSelect(e, item.volumeKey, item.questionKey, item.articleKey)}}>
                                                     onClick={(e) => {e.preventDefault()}}>
                                                             {`${item.volumeKey}/${item.questionKey}/${item.articleKey}`}
                                                 </a>
-                                                <div className="mt-3 ml-3 mr-3 mb-3">
+                                                <div className="">
                                                     <p>{`${item.volume}`} &nbsp; {`${item.questionTitle}`}</p>
                                                     <strong>{`${item.articleTitle}`}</strong>
                                                 </div>
                                             </div>
-                                            
+                                            <hr></hr>
+                                        </>
                                         )} 
                                     </div>
                                 </div>

@@ -1,18 +1,18 @@
 import React from 'react';
+import { Container, Row, Col } from 'reactstrap';
+import {FaTools} from 'react-icons/fa';
 
 class SubscribePage extends React.Component {
     render(){
         return(
-            <div>
-                <h1>Subscribe page content</h1>
-                <p>aaasddddddddddasdsadadad</p>
-                <p>aaasddddddddddasdsadadad</p>
-                <p>aaasddddddddddasdsadadad</p>
-                <p>aaasddddddddddasdsadadad</p>
-                <p>aaasddddddddddasdsadadad</p>
-                <p>aaasddddddddddasdsadadad</p>
-                <p>aaasddddddddddasdsadadad</p>
-            </div>
+            <Container>
+                <br></br>
+                <Row>
+                    <Col>
+                    <h1>Currently Under Construction <FaTools></FaTools></h1>
+                    </Col>
+                </Row>
+            </Container>
         )
     }
 }

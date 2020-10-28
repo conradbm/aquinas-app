@@ -11,7 +11,9 @@ class SearchSection extends React.Component {
                         <input className="form-control mr-sm-2" type="search" placeholder="Search here..." aria-label="Search" style={{"width":"100%"}}
                                 name={"searchField"}
                                 onChange={(e) => this.props.handleOnChange(e)}></input>
-                        <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        <br></br>
+                        <br></br>
+                        <button className="btn btn-info my-2 my-sm-0" type="submit">Search</button>
                     </form>
                     {/* <p style={{"color":"light-grey", "font-size":"12px"}}>{this.props.searchText}</p> */}
                 </Col>
