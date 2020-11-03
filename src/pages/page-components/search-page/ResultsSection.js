@@ -6,9 +6,9 @@ class ResultsSection extends React.Component {
     render(){
         return(
                 <Row>
-                    <Col>
+                    <Col className="">
                     <div className="explore-results-div">
-                        <h2>Results</h2>
+                        <h2 className="text-center">Results</h2>
                         
                         {this.props.searchResults.map((item, i) => 
                                 <div className="search-result-item" key={i}>

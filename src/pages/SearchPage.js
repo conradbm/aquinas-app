@@ -81,11 +81,8 @@ class SearchPage extends React.Component {
                 <Container>
                     <br></br>
                     <Row>
-                        <Col>
+                        <Col className="text-center">
                              <h1>Search Content </h1>
-                             <p>We created a custom search engine just for Aquinas. </p>
-                             <p>Search here to find things a little easier.</p>
-                             <p>Once you've found something promising, leverage the <em>Research</em> tab to drill in a little deeper.</p>
                         </Col>
                     </Row>
                     <br></br>
@@ -103,6 +100,27 @@ class SearchPage extends React.Component {
                     >
 
                     </ResultsSection>
+                    <Row>
+                        <Col className="d-flex justify-content-center m-3">
+                            <div className="btn-toolbar ">
+                                <div className="btn-group">
+                                    <button className="btn btn-info m-1">1</button>
+                                </div>
+                                <div className="btn-group">
+                                    <button className="btn btn-info m-1">2</button>
+                                </div>
+                                <div className="btn-group">
+                                    <button className="btn btn-info m-1">3</button>
+                                </div>
+                                <div className="btn-group">
+                                    <button className="btn btn-info m-1">4</button>
+                                </div>
+                                <div className="btn-group">
+                                    <button className="btn btn-info m-1">5</button>
+                                </div>
+                            </div>
+                            </Col>
+                    </Row>
 
                 </Container>
             </div>

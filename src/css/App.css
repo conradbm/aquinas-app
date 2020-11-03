@@ -18,3 +18,11 @@
 .result-item:hover {
   box-shadow: 0 0 11px rgba(33,33,33,.2); 
 }
+
+.dropdown-menu {
+  background-color:rgb(248,249,250);
+}
+.dropdown-item:active, .dropdown-item:hover{
+  background-color:rgb(23,162,184);
+  color:black;
+}

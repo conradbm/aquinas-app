@@ -10,13 +10,16 @@ class HomePage extends React.Component {
                 <Container>
                     <br></br>
                     <Row className="">
-                        <h1>Welcome to AquinasDaily</h1>
-                        <p>AquinasDaily is a platform dedicated to research and learning of St. Thomas Aquinas' Summa Theologica. We do this in several ways.</p>
+                        <Col className="text-center">
+                            <h1>Welcome to AquinasDaily</h1>
+                            <p>AquinasDaily is a platform dedicated to research and learning of St. Thomas Aquinas' Summa Theologica.</p>
+                        </Col>
                     </Row>
                     <br></br>
                     <Row className="">
                         <Col className="shadow-lg p-3 mb-5 bg-white rounded m-3">
                             <h3>Explore <FaCompass></FaCompass></h3>
+                            <hr></hr>
                             <p>Travel to the <em>Explore</em> tab to search and engage the summa. </p>
                             <ul>
                                 <li>The <em>Research</em> tab will satisfy your exact interests if you know what you want</li>
@@ -26,6 +29,7 @@ class HomePage extends React.Component {
                         </Col>
                         <Col className="shadow-lg p-3 mb-5 bg-white rounded m-3">
                             <h3>Community <FaPeopleCarry></FaPeopleCarry></h3>
+                            <hr></hr>
                             <p>Travel to the <em>Community</em> tab to connect with us in our community.</p>
                             <ul>
                                 <li><em>Subscribe</em> tab will place you in our AquinasDaily newsletter to engage the summa daily</li>

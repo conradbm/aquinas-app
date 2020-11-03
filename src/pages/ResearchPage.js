@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Row, Col } from 'reactstrap';
 import {FaPlus, FaMinus} from 'react-icons/fa';
+import {FaGlobe} from 'react-icons/fa';
 
 /**
  * Front-end Requirements ...
@@ -31,6 +32,29 @@ class ResearchPage extends React.Component {
         selectedQuestionKey:"",
         selectedArticleKey:"",
         similarityData:[],
+        response:{}
+    }
+
+
+    // Fetch data helper
+    saveRequest = async (v,q,a) => {
+        // let v = this.state.selectedVolumeKey;
+        // let q = this.state.selectedQuestionKey;
+        // let a = this.state.selectedArticleKey;
+        let url = `/api/save`;
+        //console.log(url);
+        const result = await fetch(url, {
+            method: "POST",
+            body: JSON.stringify({volume: v, question:q, article:a}),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        const body = await result.json();
+
+
+        // Insert user search into history table
+        this.setState({response:body});        
     }
 
     // Fetch data helper
@@ -48,6 +72,9 @@ class ResearchPage extends React.Component {
             }
         });
         const body = await result.json();
+
+
+        // Insert user search into history table
         this.setState({display_data:body});        
     }
 
@@ -136,6 +163,7 @@ class ResearchPage extends React.Component {
 
             // Update content data from db
             this.fetchData(volumeKey, questionKey, articleKey);
+            this.saveRequest(volumeKey, questionKey, articleKey);
             this.fetchSimilarityData(volumeKey, questionKey, articleKey);
 
             // Set state
@@ -164,6 +192,7 @@ class ResearchPage extends React.Component {
 
             // Update content data from db
             this.fetchData(volumeKey, questionKey, articleKey);
+            this.saveRequest(volumeKey, questionKey, articleKey);
             this.fetchSimilarityData(volumeKey, questionKey, articleKey);
 
             // Set state
@@ -186,6 +215,7 @@ class ResearchPage extends React.Component {
 
             // Update content data from db
             this.fetchData(volumeKey, questionKey, articleKey);
+            this.saveRequest(volumeKey, questionKey, articleKey);
             this.fetchSimilarityData(volumeKey, questionKey, articleKey);
 
             // Set state
@@ -287,10 +317,8 @@ class ResearchPage extends React.Component {
             <div>
                 <Container>
                 <br></br>
-                    <Col className="">
+                    <Col className="text-center">
                         <h1>Research Content</h1>
-                        <p>This is the place where you can research specific sections of Aquinas. </p>
-                        <p>We also provide some suggested readings as cross references to the any selected article for further research.</p>
 
                     </Col>
                     <br></br>

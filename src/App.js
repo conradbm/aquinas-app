@@ -6,7 +6,9 @@ import SearchPage from './pages/SearchPage';
 import ResearchPage from './pages/ResearchPage';
 import SubscribePage from './pages/SubscribePage';
 import ConnectPage from './pages/ConnectPage';
-// import AskAquinasBar from './components/AskAquinasBar'
+import AskAquinasPage from './pages/AskAquinasPage';
+import LoginPage from './pages/LoginPage';
+import SignupPage from './pages/SignupPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 import {
@@ -34,11 +36,13 @@ class App extends Component {
                 <Route path="/search" component={SearchPage}></Route>
                 <Route path="/subscribe" component={SubscribePage}></Route>
                 <Route path="/connect" component={ConnectPage}></Route>
+                <Route path="askaquinas" component={AskAquinasPage}></Route>
+                <Route path="/signup" component={SignupPage}></Route>
+                <Route path="/login" component={LoginPage}></Route>
                 {/* <Route path="/article/:name" component={ArticlePage}  /> */}
                 <Route component={NotFoundPage}></Route>
               </Switch>
             </div>
-            {/* <AskAquinasBar></AskAquinasBar> */}
           </div>
         </Router>
     )

@@ -5,7 +5,7 @@ class SearchSection extends React.Component {
     render(){
         return(
             <Row>
-                <Col>
+                <Col className="d-flex justify-content-center">
                     <form className="form-inline my-2 my-lg-0" 
                         onSubmit={(e) => this.props.handleSubmit(e)}>
                         <input className="form-control mr-sm-2" type="search" placeholder="Search here..." aria-label="Search" style={{"width":"100%"}}
