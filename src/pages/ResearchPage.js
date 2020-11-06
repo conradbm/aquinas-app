@@ -1,7 +1,6 @@
 import React from 'react';
 import { Container, Row, Col } from 'reactstrap';
 import {FaPlus, FaMinus} from 'react-icons/fa';
-import {FaGlobe} from 'react-icons/fa';
 
 /**
  * Front-end Requirements ...
@@ -447,8 +446,7 @@ class ResearchPage extends React.Component {
                                         <>
                                             <div className="result-item p-3 mb-5 bg-white rounded m-1" key={i}>
                                                 <a 
-                                                    href="" 
-                                                    className=""
+                                                    href="#" 
                                                     value={`${item.volumeKey}/${item.questionKey}/${item.articleKey}`}
                                                     // onClick={(e) => {this.handleSimilarSelect(e, item.volumeKey, item.questionKey, item.articleKey)}}>
                                                     onClick={(e) => {e.preventDefault()}}>

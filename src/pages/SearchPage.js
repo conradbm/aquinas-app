@@ -13,7 +13,6 @@ class SearchPage extends React.Component {
 
     // Display content for search result item i
     toggleContent = (e, index) => {
-        const tmp = this.state.displayResults[index];
         const newArray = [];
         var i;
         for (i = 0; i < this.state.searchResults.length; i++) {
@@ -52,7 +51,7 @@ class SearchPage extends React.Component {
     // Handle search submit
     handleSubmit = (e) => {
         e.preventDefault();
-        console.log(`Search text is currently ${this.state.searchText}`);
+        //console.log(`Search text is currently ${this.state.searchText}`);
 
         // Get results
         this.makeSearch(this.state.searchText);

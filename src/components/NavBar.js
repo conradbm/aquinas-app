@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
-import {FaGlobe, FaHandshake, FaQuestion, FaBookOpen} from 'react-icons/fa';
+import {FaGlobe, FaQuestion, FaBookOpen} from 'react-icons/fa';
 import {FaCompass, FaPeopleCarry} from 'react-icons/fa';
 
 class NavBar extends React.Component {

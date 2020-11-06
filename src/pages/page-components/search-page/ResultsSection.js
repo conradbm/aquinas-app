@@ -23,7 +23,7 @@ class ResultsSection extends React.Component {
                                         </h3>
 
                                         <a 
-                                            href="" 
+                                            href="#" 
                                             className="mt-3 ml-3 mr-3"
                                             value={`${item.volumeKey}/${item.questionKey}/${item.articleKey}`}
                                             onClick={(e) => {e.preventDefault()}}>
