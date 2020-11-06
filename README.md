@@ -1,68 +1,130 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# AquinasDaily
 
-## Available Scripts
+## Below are the instructions to setup this application.
 
-In the project directory, you can run:
 
-### `npm start`
+## For Development
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Install express
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+<code>npm init -y</code>
+<code>npm install --save express</code>
+<code>npm install --save-dev @babel/core @babel/node @babel/preset-env</code>
 
-### `npm test`
+#### Setup babel ES6 syntax
+Create .babelrc file in main backend directory with the following,
+<code>
+{
+    "presets": ["@babel/preset-env"]
+}
+</code>
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+this gives us modern ES6 syntax using server.js
+<code>npx babel-node src/server.js</code>
 
-### `npm run build`
+<code>npm install --save body-parser</code>
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<code>npm install --save-dev nodemon</code>
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+for hot-encoding/refreshing
+<code>npx nodemon --exec npx babel-node src/server.js</code>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### MongoDB Setup
 
-### `npm run eject`
+<code>mkdir -p /data/db</code>
+<code>mongod</code>
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<code>npm install --save mongodb</code>
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+<hr>
 
-## Learn More
+## For Production (AWS EC2)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### Setup instance
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. Create EC2 Instance
+2. Create Key Pair
+3. SSH in
+<code>ssh -i .\aquinas-app-key.pem ec2-user@<Public IPv4 DNS> </code>
 
-### Code Splitting
+4. Install git
+<code>sudo yum install git</code>
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+5. Install NPM (https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/setting-up-node-on-ec2-instance.html)
+<code>curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash </code>
+<code>. ~/.nvm/nvm.sh</code>
+<code>nvm install 12.18.4</code>
+<code>npm install -g npm@latest</code>
 
-### Analyzing the Bundle Size
+6. Install MongoDB (https://docs.mongodb.com/manual/tutorial/install-mongodb-on-amazon/)
+<code>sudo nano /etc/yum.repos.d/mongodb-org-4.4.repo</code>
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+Paste the below into the file
+<code>
+[mongodb-org-4.4]
+name=MongoDB Repository
+baseurl=https://repo.mongodb.org/yum/amazon/2/mongodb-org/4.4/x86_64/
+gpgcheck=1
+enabled=1
+gpgkey=https://www.mongodb.org/static/pgp/server-4.4.asc
+</code>
 
-### Making a Progressive Web App
+#### Install mongo
+<code>sudo yum install -y mongodb-org</code>
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+#### Run mongo daemon
+<code>sudo service mongod start</code>
+<code>mongo</code>
+<code> use aquinas-db; </code>
 
-### Advanced Configuration
+7. Clone git code
+<code>git clone https://github.com/conradbm/aquinas-app</code>
+<code>cd aquinas-app/aquinas-backend</code>
+<code>npm install</code>
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+8. Run the server
+<code>npm install -g forever </code>
+<code>forever start -c "npm start" . </code>
+<code>forever list</code>
 
-### Deployment
+9. Map port 8000 to port 80 on AWS
+<code>sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 8000</code>
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+10. Go manually to security groups for this EC2 instance and change port 80 to ANYWHERE.
 
-### `npm run build` fails to minify
+<hr>
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+### Instructions for inserting data into db
+
+#### Insert articles data
+<code>> var file = cat('.aquinas_new.json'); </code>
+
+<code>> use aquinas-db</code>
+ 
+<code>> var o = JSON.parse(file);</code>
+
+<code>> db.articles.insert(o);</code>
+
+#### Insert similarities data
+<code>> var file = cat('.aquinas_similarity.json');</code>
+<code>> use aquinas-db</code>
+<code>> var o = JSON.parse(file);</code>
+<code>> db.articles.insert(o);</code>
+
+
+### Indexing articles
+
+<code>> db.articles.createIndex({"questionTitle":"text", "articleTitle":"text", "articleObjections":"text", "articleBody":"text", "articleReplyToObjections":"text"});</code>
+
+<code>>db.articles.findOne( { $text: { $search: "Plato" } } ); </code>
+
+<hr>
+
+### Collections to construct
+
+#### History table
+
+<code>use aquinas-db;</code>
+<code>db.createCollection("history");</code>
