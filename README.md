@@ -153,3 +153,9 @@ gpgkey=https://www.mongodb.org/static/pgp/server-4.4.asc
 <code>use aquinas-db;</code>
 
 <code>db.createCollection("history");</code>
+
+## For Domain
+
+https://aws.amazon.com/getting-started/hands-on/get-a-domain/
+
+
