@@ -168,7 +168,7 @@ import { CLIENT_RENEG_LIMIT } from 'tls';
 const app = express();
 
 // For hosting the site
-// app.use(express.static(path.join(__dirname, '/build')));
+app.use(express.static(path.join(__dirname, '/build')));
 
 // Provides a body tag for json
 app.use(bodyParser.json());
@@ -289,9 +289,9 @@ app.post('/api/subscribe', async (req, res) => {
 })
 
 // For hosting the site @ port 8000
-// app.get('*', (req, res) => {
-//     res.sendFile(path.join(__dirname + '/build/index.html'));
-// });
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/build/index.html'));
+});
 
 // Listen to port 8000
 app.listen(8000, () => console.log("Listening on port 8000"));
