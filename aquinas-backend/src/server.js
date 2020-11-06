@@ -124,7 +124,13 @@ sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 8000
 > db.articles.createIndex({"questionTitle":"text", "articleTitle":"text", "articleObjections":"text", "articleBody":"text", "articleReplyToObjections":"text"});
 db.articles.findOne( { $text: { $search: "love" } } );
 
-*** Create a search history table
+_________________________________________________
+Collections to construct
+
+
+*** Create articles table by insert
+*** Create similarity table by insert
+*** Create a search history table by construction, users insert
 use aquinas-db;
 db.createCollection("history");
 
@@ -178,10 +184,36 @@ app.get('/api/articles/:volume/:question/:article', async (req, res) => {
         const question = req.params.question;
         const article = req.params.article;
 
+        // Save the query into the database
+        //await db.collection('history').insertOne({type:"research", username: "Guest", data: {volumeKey:volume, questionKey:question, articleKey:article}, date: Date()});
+
         const articleInfo = await db.collection('articles').findOne({volumeKey:volume, questionKey:question, articleKey:article});
         res.status(200).json(articleInfo);
     }, res);
 })
+
+// GET: Retrieve article data
+app.post('/api/save', async (req, res) => {
+
+    // Start with withDB code, until we hit the parameter `operations`
+    // then plug in the argument lines of code, then proceed.
+    // This removes all boilerplate database code
+    withDB( async (db) => {
+        // Get URL/body parameters
+        const volume = req.body.volume;
+        const question = req.body.question;
+        const article = req.body.article;
+        
+
+        // Save the query into the database
+        const record = {type:"research", username: "Guest", data: {volumeKey:volume, questionKey:question, articleKey:article}, date: Date()};
+
+        await db.collection('history').insertOne(record);
+
+        res.status(200).json(record);
+    }, res);
+})
+
 
 // GET: Retrieve similarity data
 app.get('/api/similarity/:volume/:question/:article', async (req, res) => {
@@ -208,13 +240,33 @@ app.post('/api/search', async (req, res) => {
         const query = req.body.query;
 
         // Save the query into the database
-        await db.collection('history').insertOne({username: "Guest", query: query, date: Date()});
+        await db.collection('history').insertOne({type:"search", username: "Guest", data: {query: query}, date: Date()});
 
         // Select statement
         const articleInfo = await db.collection('articles').find({ "$text": {"$search":query}}).limit(15).toArray();
 
         // Send latest back
         res.status(200).json(articleInfo);
+    }, res)
+
+})
+
+// POST: Search
+app.post('/api/subscribe', async (req, res) => {
+    
+    withDB( async (db) => {
+
+        // Get URL/body parameters
+        const userEmail = req.body.userEmail;
+        const dailyUpdates = req.body.dailyUpdates;
+        const updatesAndFixes = req.body.updatesAndFixes;
+
+        // Save the query into the database
+        const record = {type:"subscribe", username: "Guest", data: {userEmail: userEmail, dailyUpdates: dailyUpdates, updatesAndFixes:updatesAndFixes}, date: Date()};
+        await db.collection('history').insertOne(record);
+
+        // Send latest back
+        res.status(200).json(record);
     }, res)
 
 })
