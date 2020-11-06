@@ -104,6 +104,8 @@ switched to db my-blog
 ... },
 ... ])
 
+
+
 7. Clone git code
 git clone https://github.com/conradbm/my-blog.git
 cd my-blog
@@ -120,7 +122,22 @@ sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 8000
 10. Go manually to security groups for this EC2 instance and change port 80 to ANYWHERE.
 
 
-*** Index a collection ***
+*** Create articles collection from json ***
+> var file = cat('./src/data/aquinas_new.json');
+> use aquinas-db
+switched to db aquinas-db
+> var o = JSON.parse(file);
+> db.articles.insert(o);
+
+*** Create similarities collection from json ***
+> var file = cat('./src/data/similarity.json');
+> use aquinas-db
+switched to db aquinas-db
+> var o = JSON.parse(file);
+> db.articles.insert(o);
+
+
+*** Index a articles ***
 > db.articles.createIndex({"questionTitle":"text", "articleTitle":"text", "articleObjections":"text", "articleBody":"text", "articleReplyToObjections":"text"});
 db.articles.findOne( { $text: { $search: "love" } } );
 
@@ -151,7 +168,7 @@ import { CLIENT_RENEG_LIMIT } from 'tls';
 const app = express();
 
 // For hosting the site
-app.use(express.static(path.join(__dirname, '/build')));
+// app.use(express.static(path.join(__dirname, '/build')));
 
 // Provides a body tag for json
 app.use(bodyParser.json());
@@ -270,76 +287,11 @@ app.post('/api/subscribe', async (req, res) => {
     }, res)
 
 })
-// POST: Update article upvote/selected data
-// app.post('/api/articles/:name/upvote', async (req, res) => {
-    
-//     withDB(async (db) => {
-
-//         // Get URL parameters
-//         const articleName = req.params.name;
-
-//         // Select statement
-//         const articleInfo = await db.collection('articles').findOne({name:articleName});
-
-//         // Update statement
-//         await db.collection('articles').updateOne({name: articleName}, {
-//             /*
-//             '$inc':{
-//                 upvotes:1,
-//             }
-//             */
-//             '$set':{
-//                 upvotes: articleInfo.upvotes+1,
-//             }
-//         });
-    
-//         // Select statement, latest info
-//         const updatedArticleInfo = await db.collection('articles').findOne({name:articleName});
-    
-//         // Send latest back
-//         res.status(200).json(updatedArticleInfo);
-//     }, res)
-
-// })
-
-// // POST: Update article comment data from users
-// app.post('/api/articles/:name/add-comment', async (req, res) => {
-    
-//     withDB( async (db) => {
-
-//         // Get URL/body parameters
-//         const articleName = req.params.name;
-//         const {username, text} = req.body;
-
-//         // Select statement
-//         const articleInfo = await db.collection('articles').findOne({name:articleName});
-
-//         // Append statement
-//         await db.collection('articles').updateOne({name: articleName}, {
-//             /* 
-//             '$push':{
-//                 comments: {username, text},
-//             }
-//             */
-//            '$set':{
-//                comments: articleInfo.comments.concat({username, text}),
-//            }
-//         });
-    
-//         // Select statement, latest info
-//         const updatedArticleInfo = await db.collection('articles').findOne({name:articleName});
-    
-//         // Send latest back
-//         res.status(200).json(updatedArticleInfo);
-//     }, res)
-
-// });
 
 // For hosting the site @ port 8000
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname + '/build/index.html'));
-});
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname + '/build/index.html'));
+// });
 
 // Listen to port 8000
 app.listen(8000, () => console.log("Listening on port 8000"));
-
