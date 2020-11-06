@@ -2,6 +2,7 @@
   "name": "aquinas-backend",
   "version": "1.0.0",
   "main": "index.js",
+  "proxy": "http://localhost:8000/",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx nodemon --exec npx babel-node src/server.js"
